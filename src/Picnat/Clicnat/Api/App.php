@@ -5,6 +5,7 @@ use Slim\App as SlimApp;
 use Picnat\Clicnat\Api\Controllers\MainController;
 use Picnat\Clicnat\Api\Controllers\UserController;
 use Picnat\Clicnat\Api\Controllers\ObservationController;
+use Picnat\Clicnat\Api\Controllers\CitationController;
 
 class App extends SlimApp {
 	private $api_session;
@@ -166,8 +167,33 @@ class App extends SlimApp {
 			 * @apiSuccess {Array} observation l'observation
 			 * @apiSuccessExample Réponse
 			 *	HTTP/1.1 200 OK
-       */
+			 */
 			$app->put("observation", ObservationController::class.":createObservation");
+
+			/**
+			 * @api {get} /v1/citation/:id Consulter une citation
+			 * @apiName DetailCitation
+			 * @apiGroup Citation
+			 * @apiHeader {String} Authorization Session id.
+			 * @apiParam {Integer} id_citation
+			 * @apiSuccessExample Réponse
+			 *	HTTP/1.1 200 OK
+			 *
+			 * {
+			 *   "age": "?",
+			 *   "id_citation": "1279461",
+			 *   "nb": 1,
+			 *   "nb_max": null,
+			 *   "nb_min": null,
+			 *   "sexe": "?",
+			 *   "taxon": {
+			 *      "id": "307",
+			 *      "nom_f": "Héron cendré",
+			 *      "nom_s": "Ardea cinerea L."
+			 *   }
+			 * }
+			 */
+			$app->get("citation/{id_citation}", CitationController::class.":citationDetails");
 		});
 	}
 }
