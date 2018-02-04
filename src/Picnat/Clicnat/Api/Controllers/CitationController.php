@@ -15,17 +15,23 @@ class CitationController {
 		$u = $this->getSessionUser($request);
 		$cit = $u->get_citation_authok($args['id_citation']);
 		return $response->withJson([
-			"id_citation" => $cit->id_citation,
+			"id_citation"    => $cit->id_citation,
+			"id_observation" => $cit->id_observation,
 			"taxon" => [
 				"id"    => $cit->get_espece()->id_espece,
 				"nom_f" => $cit->get_espece()->nom_f,
 				"nom_s" => $cit->get_espece()->nom_s
 			],
-			"sexe"    => $cit->sexe,
-			"age"     => $cit->age,
-			"nb"      => is_null($cit->nb)?null:(int)$cit->nb,
-			"nb_min"  => is_null($cit->nb_min)?null:(int)$cit->nb_min,
-			"nb_max"  => is_null($cit->nb_max)?null:(int)$cit->nb_max
+			"sexe"           => $cit->sexe,
+			"age"            => $cit->age,
+			"nb"             => is_null($cit->nb)?null:(int)$cit->nb,
+			"nb_min"         => is_null($cit->nb_min)?null:(int)$cit->nb_min,
+			"nb_max"         => is_null($cit->nb_max)?null:(int)$cit->nb_max,
+			"tags"           => $cit->get_tags(),
+			"commentaires"   => $cit->get_commentaires(),
+			"indice_qualite" => $cit->indice_qualite,
+			"ref_import"     => $cit->ref_import,
+			"guid"           => $cit->guid
 		]);
 	}
 }
