@@ -157,6 +157,21 @@ class App extends SlimApp {
 			$app->get("observation/{id_observation}", ObservationController::class.":observationDetails");
 
 			/**
+			 * @api {put} /v1/observation/:id Créer une citation sur une observation
+			 * @apiName AddTaxon
+			 * @apiGroup Observation
+			 * @apiHeader {String} Authorization Session id.
+			 *
+			 * @apiSuccess {Integer} id_citation numéro de la nouvelle citation
+			 * @apiSuccessExample Réponse
+			 * 	HTTP/1.1 200 OK
+			 * 	{
+			 * 		"id_citation": 1358529
+			 * 	}
+			 */
+			$app->put("observation/{id_observation}/citation", ObservationController::class.":addTaxon");
+
+			/**
 			 * @api {get} /v1/observation/:id Créer une observation
 			 * @apiName CreateObservation
 			 * @apiGroup Observation

@@ -58,4 +58,21 @@ class ObservationController {
 			"id_observation"   => $id_observation
 		]);
 	}
+
+	public function addTaxon(Request $request, Response $response, $args) {
+		try {
+			$u = $this->getSessionUser($request);
+			$obs = $u->get_observation_authok(
+				\Picnat\Clicnat\get_observation($this->db, $args['id_observation'])
+			);
+			$id_citation = $obs->add_citation($request->getParam('id_espece'));
+		} catch (\Exception $e) {
+			return $reponse->withJson([
+				"message" => $e->getMessage(),
+			],400);
+		}
+		return $response->withJson([
+			"id_citation" => $id_citation
+		]);
+	}
 }
